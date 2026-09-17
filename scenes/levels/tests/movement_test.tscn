@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://xenkl71v33o8"]
+
+[ext_resource type="Script" uid="uid://v2eiaxp6b86p" path="res://scenes/levels/tests/movement_test.gd" id="1_gg8tf"]
+[ext_resource type="PackedScene" uid="uid://byve8aha50yct" path="res://scenes/player/player.tscn" id="1_p121q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p121q"]
+size = Vector2(1200, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gg8tf"]
+size = Vector2(160, 24)
+
+[node name="MovementTest" type="Node2D" unique_id=1585109649]
+script = ExtResource("1_gg8tf")
+
+[node name="Floor" type="StaticBody2D" parent="." unique_id=357440295]
+position = Vector2(0, 200)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=609225228]
+shape = SubResource("RectangleShape2D_p121q")
+
+[node name="Polygon2D" type="Polygon2D" parent="Floor" unique_id=1984938314]
+color = Color(0.446777, 0.44677705, 0.44677705, 1)
+polygon = PackedVector2Array(-600, -20, 600, -20, 600, 20, -600, 20)
+
+[node name="Platform" type="StaticBody2D" parent="." unique_id=1103342135]
+position = Vector2(160, 130)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform" unique_id=1967725795]
+shape = SubResource("RectangleShape2D_gg8tf")
+
+[node name="Polygon2D" type="Polygon2D" parent="Platform" unique_id=1666433951]
+color = Color(0.446777, 0.44677705, 0.44677705, 1)
+polygon = PackedVector2Array(-80, -12, 80, -12, 80, 12, -80, 12)
+
+[node name="Player" parent="." unique_id=1601773610 instance=ExtResource("1_p121q")]
+position = Vector2(0, 100)
+
+[node name="PlayerSpawn" type="Marker2D" parent="." unique_id=1009125813]
+position = Vector2(0, 100)
