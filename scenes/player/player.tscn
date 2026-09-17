@@ -38,10 +38,11 @@ shape = SubResource("CapsuleShape2D_m58bk")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=875183637]
 
-[node name="InteractionDetector" type="Area2D" parent="." unique_id=211203672]
+[node name="InteractionDetector" type="Area2D" parent="." unique_id=211203672 node_paths=PackedStringArray("player")]
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("3_gmlin")
+player = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionDetector" unique_id=599614055]
 shape = SubResource("CircleShape2D_m58bk")

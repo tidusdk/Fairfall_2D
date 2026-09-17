@@ -10,6 +10,11 @@ func _ready() -> void:
 	var arrival_id: StringName = SceneTransition.take_arrival_id()
 	var spawn: Marker2D = _find_arrival(arrival_id)
 	player.respawn_at(spawn.global_position)
+
+	if arrival_id != &"":
+		player.set_controls_enabled(false)
+		SceneTransition.report_arrival(player)
+	
 	
 func _find_arrival(arrival_id: StringName) -> Marker2D:
 	if arrival_id == &"":

@@ -1,6 +1,7 @@
 class_name InteractionDetector
 extends Area2D
 signal target_updated(target: Interactable)
+@export var player: PlayerController
 
 func _ready() -> void:
 	area_entered.connect(_on_area_entered)
@@ -17,12 +18,16 @@ func _on_area_exited(area: Area2D) -> void:
 		print("Left interaction range: ", area.prompt_text)
 		
 func _unhandled_input(event: InputEvent) -> void:
+	if not player.controls_enabled:
+		return
+		
+		# Your existing interaction input logic continues here
 	if event.is_action_pressed("interact"):
 		var target: Interactable = _find_nearest_interactable()
 		
 		if is_instance_valid(target):
 			get_viewport().set_input_as_handled()
-			target.interact()
+			target.interact(player)
 			
 func _find_nearest_interactable() -> Interactable:
 	var nearest: Interactable = null
@@ -40,6 +45,10 @@ func _find_nearest_interactable() -> Interactable:
 
 	return nearest
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
+	if not player.controls_enabled:
+		target_updated.emit(null)
+		return
+
 	var target: Interactable = _find_nearest_interactable()
 	target_updated.emit(target)

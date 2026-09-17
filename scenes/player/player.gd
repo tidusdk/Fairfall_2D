@@ -8,8 +8,20 @@ extends CharacterBody2D
 
 var _coyote_time_remaining: float = 0.0
 var _jump_buffer_remaining: float = 0.0
+var controls_enabled: bool = true
+var _is_entering: bool = false
 
 func _physics_process(delta: float) -> void:
+	if _is_entering:
+		return
+		
+	if not controls_enabled:
+		if not is_on_floor():
+			velocity += get_gravity() * delta
+
+		move_and_slide()
+		return
+
 	if is_on_floor():
 		_coyote_time_remaining = coyote_time
 	else:
@@ -36,9 +48,32 @@ func _physics_process(delta: float) -> void:
 	velocity.x = direction * move_speed
 
 	move_and_slide()
+
 	
 func respawn_at(spawn_position: Vector2) -> void:
 	global_position = spawn_position
 	velocity = Vector2.ZERO
 	_coyote_time_remaining = 0.0
 	_jump_buffer_remaining = 0.0
+	
+func set_controls_enabled(enabled: bool) -> void:
+	controls_enabled = enabled
+	velocity.x = 0.0
+	_jump_buffer_remaining = 0.0
+	_coyote_time_remaining = 0.0
+	
+func approach_entrance(entry_position: Vector2) -> void:
+	set_controls_enabled(false)
+	_is_entering = true
+	velocity = Vector2.ZERO
+
+	var tween: Tween = create_tween()
+	tween.tween_property(
+		self,
+		"global_position",
+		entry_position,
+		0.3
+	)
+	await tween.finished
+
+	_is_entering = false

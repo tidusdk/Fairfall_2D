@@ -22,3 +22,6 @@ shape = SubResource("RectangleShape2D_jumwc")
 [node name="DoorBehavior" type="Node" parent="." unique_id=2052081050]
 script = ExtResource("2_i22i8")
 destination_scene = "uid://h6flag8qke20"
+
+[node name="EntryPosition" type="Marker2D" parent="." unique_id=954886382]
+position = Vector2(0, -26)

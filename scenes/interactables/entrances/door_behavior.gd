@@ -4,20 +4,17 @@ extends Node
 @export var destination_arrival_id: StringName = &"WorkshopDoor"
 
 @onready var interactable: Interactable = get_parent() as Interactable
+@onready var entry_position: Marker2D = $"../EntryPosition"
 
 
 func _ready() -> void:
 	interactable.interacted.connect(_on_interacted)
 
 
-func _on_interacted() -> void:
-	if destination_scene.is_empty():
-		push_warning("Door has no destination scene assigned")
-		return
-		
-	SceneTransition.pending_arrival_id = destination_arrival_id
-	
-	var error: Error = get_tree().change_scene_to_file(destination_scene)
-
-	if error != OK:
-		push_error("Could not open destination scene: " + destination_scene	)
+func _on_interacted(player: PlayerController) -> void:
+	SceneTransition.travel(
+		player,
+		entry_position.global_position,
+		destination_scene,
+		destination_arrival_id
+	)
