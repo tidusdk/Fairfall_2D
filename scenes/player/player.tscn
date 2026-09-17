@@ -2,21 +2,46 @@
 
 [ext_resource type="Texture2D" uid="uid://cbadik3sheb3y" path="res://icon.svg" id="1_8afob"]
 [ext_resource type="Script" uid="uid://c62roogjike1a" path="res://scenes/player/player.gd" id="1_dovo2"]
+[ext_resource type="Script" uid="uid://b0dymocn1tu32" path="res://scenes/player/interaction_detector.gd" id="3_gmlin"]
+[ext_resource type="Script" uid="uid://c35qsnfiy0c6b" path="res://scenes/player/interaction_prompt.gd" id="3_lvxji"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m58bk"]
 radius = 12.0
 height = 48.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_m58bk"]
+radius = 20.0
+
 [node name="Player" type="CharacterBody2D" unique_id=1601773610]
+collision_layer = 2
 script = ExtResource("1_dovo2")
 
 [node name="Visuals" type="Node2D" parent="." unique_id=777488300]
+z_index = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="Visuals" unique_id=180095062]
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("1_8afob")
 
+[node name="InteractionPrompt" type="Label" parent="Visuals" unique_id=209376515 node_paths=PackedStringArray("detector")]
+offset_left = -120.0
+offset_top = -60.0
+offset_right = 120.0
+offset_bottom = -30.0
+text = "E - Enter Workshop"
+horizontal_alignment = 1
+script = ExtResource("3_lvxji")
+detector = NodePath("../../InteractionDetector")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1072218316]
 shape = SubResource("CapsuleShape2D_m58bk")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=875183637]
+
+[node name="InteractionDetector" type="Area2D" parent="." unique_id=211203672]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("3_gmlin")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionDetector" unique_id=599614055]
+shape = SubResource("CircleShape2D_m58bk")

@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://18yjbaf6tkos"]
+
+[ext_resource type="Script" uid="uid://denfgua8fbj01" path="res://scenes/interactables/interactable.gd" id="1_7xal4"]
+[ext_resource type="Script" uid="uid://cwllvo06n22bc" path="res://scenes/interactables/entrances/door_behavior.gd" id="2_i22i8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jumwc"]
+size = Vector2(80, 80)
+
+[node name="WorkshopDoor" type="Area2D" unique_id=1768487397]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_7xal4")
+prompt_text = "Enter Workshop"
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=321936748]
+polygon = PackedVector2Array(-24, -72, 24, -72, 24, 0, -24, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1693983126]
+position = Vector2(0, -40)
+shape = SubResource("RectangleShape2D_jumwc")
+
+[node name="DoorBehavior" type="Node" parent="." unique_id=2052081050]
+script = ExtResource("2_i22i8")
+destination_scene = "uid://h6flag8qke20"

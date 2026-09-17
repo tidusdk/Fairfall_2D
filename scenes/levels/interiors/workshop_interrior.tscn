@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://h6flag8qke20"]
+
+[ext_resource type="Script" uid="uid://v2eiaxp6b86p" path="res://scenes/levels/level.gd" id="1_ifjdf"]
+[ext_resource type="PackedScene" uid="uid://byve8aha50yct" path="res://scenes/player/player.tscn" id="1_uemrn"]
+[ext_resource type="PackedScene" uid="uid://18yjbaf6tkos" path="res://scenes/interactables/entrances/workshop_door.tscn" id="3_6ielf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ifjdf"]
+size = Vector2(1200, 40)
+
+[node name="WorkshopInterrior" type="Node2D" unique_id=1403769329 node_paths=PackedStringArray("player", "default_spawn")]
+script = ExtResource("1_ifjdf")
+player = NodePath("Player")
+default_spawn = NodePath("PlayerSpawn")
+
+[node name="Floor" type="StaticBody2D" parent="." unique_id=313790161]
+position = Vector2(0, 200)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=1667136905]
+shape = SubResource("RectangleShape2D_ifjdf")
+
+[node name="Polygon2D" type="Polygon2D" parent="Floor" unique_id=1972365325]
+color = Color(0.446777, 0.44677705, 0.44677705, 1)
+polygon = PackedVector2Array(-600, -20, 600, -20, 600, 20, -600, 20)
+
+[node name="Player" parent="." unique_id=1601773610 instance=ExtResource("1_uemrn")]
+
+[node name="PlayerSpawn" type="Marker2D" parent="." unique_id=1256503895]
+position = Vector2(0, 100)
+
+[node name="ArrivalPoints" type="Node2D" parent="." unique_id=1461854580]
+
+[node name="WorkshopDoor" type="Marker2D" parent="ArrivalPoints" unique_id=421941220]
+position = Vector2(-150, 154)
+
+[node name="ExitDoor" parent="." unique_id=1768487397 instance=ExtResource("3_6ielf")]
+position = Vector2(-200, 180)
+prompt_text = "Leave Workshop"
+
+[node name="DoorBehavior" parent="ExitDoor" index="2" unique_id=2052081050]
+destination_scene = "uid://xenkl71v33o8"
+
+[editable path="ExitDoor"]
